@@ -168,7 +168,7 @@ public class RpnlaskinGUIController {
 
     private void poistaRivinvaihdotLopusta(StringBuilder syote) {
         if (syote.length()== 0) return;
-        while (syote.lastIndexOf("\n") == syote.length()-1) {
+        while (syote.lastIndexOf("\n") == syote.length()-1 && syote.length()-1 != -1) {
             syote.delete(syote.length()-1,  syote.length());
             poistaViimeinen(textAreaNaytto);
         }
@@ -181,7 +181,12 @@ public class RpnlaskinGUIController {
      * 
      */
     public void monistaLuku() {
-        StringBuilder syote = haeSyote(textAreaNaytto); 
+        StringBuilder syote = haeSyote(textAreaNaytto);
+        poistaRivinvaihdotLopusta(syote);
+        if (syote.length() == 0) {
+            textAreaNaytto.appendText("0.0" +"\n" +"0.0") ;
+            return;
+        }
         String alinLuku = haeAlinLuku(syote);
         if (alinLuku !="") textAreaNaytto.appendText("\n" + alinLuku);
         else  textAreaNaytto.appendText("\n" + textAreaNaytto.getText());   
