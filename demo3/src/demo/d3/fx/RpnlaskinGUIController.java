@@ -86,19 +86,6 @@ public class RpnlaskinGUIController {
     }
     
     
-     /**
-     * @param syote syote josta alin haetaan
-     * @return alimpana olevan syotteen
-     */
-    public static String haeToiseksiAlinLuku(StringBuilder syote) {
-        if  (syote.indexOf("\n") == -1) return "0"; // Jos syötteessä on vain 1 luku
-        String s = Mjonot.erota(syote, '\n', true); //tässä oli .trim
-        StringBuilder toiseksiAlin = new StringBuilder(s);
-        if (toiseksiAlin.indexOf("\n") == -1) return toiseksiAlin.toString();
-        Mjonot.erota(toiseksiAlin, '\n', true);
-        return toiseksiAlin.toString();
-    }
-    
     
     /**
      * Poistaa 
