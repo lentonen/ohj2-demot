@@ -10,7 +10,7 @@
    <bottom>
       <HBox BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="buttonEnter" mnemonicParsing="false" onAction="#monistaLuku" text="Enter">
+            <Button fx:id="buttonEnter" mnemonicParsing="false" onAction="#monistaAlin" text="Enter">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>

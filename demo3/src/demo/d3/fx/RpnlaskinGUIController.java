@@ -54,7 +54,6 @@ public class RpnlaskinGUIController {
      * @param text textArea josta syote haetaan
      * @return syotteen muutettuna StringBuilderiksi
      */
-    
     private StringBuilder haeSyote(TextArea text) {
         StringBuilder syote = new StringBuilder(text.getText());
         return syote;
@@ -74,8 +73,8 @@ public class RpnlaskinGUIController {
     
     
     /**
-     * @param syote syote josta alin haetaan
-     * @return alimpana olevan syotteen
+     * @param syote josta alin haetaan
+     * @return alimpana olevan luvun
      */
     public static String haeAlinLuku(StringBuilder syote) {
         if (syote.length() == 0) return "0";
@@ -86,12 +85,20 @@ public class RpnlaskinGUIController {
     }
     
     
+    /**
+     * Poistaa viimeisellä rivillä olevan luvun
+     * @param syote käsiteltävä syöte, jonka viimeinen rivi poistetaan
+     */
+    private void poistaAlinLuku(StringBuilder syote) {
+        syote.delete(syote.lastIndexOf("\n")+1, syote.length());
+    }
+    
     
     /**
-     * Poistaa 
-     * @param text
+     * Poistaa textArean lopusta viimeisen luvun ja sitä edeltäneen rivinvaihdon. Käytetään kun halutaan
+     * tehdä tilaa laskutoimituksen tulostukselle.
+     * @param text 
      */
-    
     private void poistaViimeinen(TextArea text) {
         StringBuilder syote = haeSyote(text);
         int poistonAlku = syote.lastIndexOf("\n");
@@ -100,8 +107,23 @@ public class RpnlaskinGUIController {
         text.setText(syote.toString());
     }
     
-
     
+    /**
+     * Poistaa syötteen loppusta kaikki rivinvaihdot
+     * @param syote syöte josta rivinvaihdot poistetaan
+     */
+    private void poistaRivinvaihdotLopusta(StringBuilder syote) {
+        if (syote.length()== 0) return;
+        while (syote.lastIndexOf("\n") == syote.length()-1 && syote.length()-1 != -1) {
+            syote.delete(syote.length()-1,  syote.length());
+            poistaViimeinen(textAreaNaytto);
+        }        
+    }
+    
+    
+    /**
+     * Tekee rpn-laskukoneen jakolaskun kahdelle alimmalle luvulle. Ylempi luku jaetaan alemmalla.
+     */
     private void jaaLuvut() {
         StringBuilder syote = haeSyote(textAreaNaytto);
         poistaRivinvaihdotLopusta(syote);        
@@ -118,6 +140,9 @@ public class RpnlaskinGUIController {
     }
     
     
+    /**
+     * Tekee kertolaskun rpn-laskimen kahdelle alimmalle luvulle.
+     */
     private void kerroLuvut() {
         StringBuilder syote = haeSyote(textAreaNaytto);
         poistaRivinvaihdotLopusta(syote);        
@@ -133,64 +158,66 @@ public class RpnlaskinGUIController {
     }
             
     
+    /**
+     * Tekee yhteenlaskun rpn-laskimen kahdelle alimmalle luvulle
+     */
     private void summaaLuvut() {
-        StringBuilder syote = haeSyote(textAreaNaytto);
-        poistaRivinvaihdotLopusta(syote);        
-        double alinLuku = Double.parseDouble(haeAlinLuku(syote));
-        poistaAlinLuku(syote);
-        poistaRivinvaihdotLopusta(syote);
-        double toiseksiAlinLuku = Double.parseDouble(haeAlinLuku(syote));
-        double summa = alinLuku + toiseksiAlinLuku;
-        poistaViimeinen(textAreaNaytto); // Tekee tilaa uudelle luvulle
-        if (textAreaNaytto.getLength() == 0) textAreaNaytto.appendText(Double.toString(summa));  
-        else textAreaNaytto.appendText("\n"+summa);   
-    }
-    
-    
-    private void poistaAlinLuku(StringBuilder syote) {
-            syote.delete(syote.lastIndexOf("\n")+1, syote.length());
+        try{
+            StringBuilder syote = haeSyote(textAreaNaytto);
+            poistaRivinvaihdotLopusta(syote);        
+            double alinLuku = Double.parseDouble(haeAlinLuku(syote));
+            poistaAlinLuku(syote);
+            poistaRivinvaihdotLopusta(syote);
+            double toiseksiAlinLuku = Double.parseDouble(haeAlinLuku(syote));
+            double summa = alinLuku + toiseksiAlinLuku;
+            poistaViimeinen(textAreaNaytto); // Tekee tilaa uudelle luvulle
+            if (textAreaNaytto.getLength() == 0) textAreaNaytto.appendText(Double.toString(summa));  
+            else textAreaNaytto.appendText("\n"+summa);  
+        } catch (Exception e) {
+            textAreaNaytto.setText("0.0");
         }
-
-
-
-    private void poistaRivinvaihdotLopusta(StringBuilder syote) {
-        if (syote.length()== 0) return;
-        while (syote.lastIndexOf("\n") == syote.length()-1 && syote.length()-1 != -1) {
-            syote.delete(syote.length()-1,  syote.length());
-            poistaViimeinen(textAreaNaytto);
-        }
-
         
     }
 
 
     /**
-     * 
+     * Monistaa rpn-laskimen alimman luvun enter-näppäimellä uudelle riville.
      */
-    public void monistaLuku() {
-        StringBuilder syote = haeSyote(textAreaNaytto);
-        poistaRivinvaihdotLopusta(syote);
-        if (syote.length() == 0) {
-            textAreaNaytto.appendText("0.0" +"\n" +"0.0") ;
-            return;
+    private void monistaLuku() {
+        try{
+            StringBuilder syote = haeSyote(textAreaNaytto);  //TODO: regexp kuntoon, jotta enter ei lisää kirjaimia
+            poistaRivinvaihdotLopusta(syote);
+            if (syote.length() == 0 || syote.toString().matches(".*[a-z]")) {
+                textAreaNaytto.setText("");
+                textAreaNaytto.appendText("0.0" +"\n" +"0.0") ;
+                return;
+            }
+            String alinLuku = haeAlinLuku(syote);
+            if (alinLuku !="") textAreaNaytto.appendText("\n" + alinLuku);
+            else  textAreaNaytto.appendText("\n" + textAreaNaytto.getText()); 
+        } catch (Exception e) {
+            textAreaNaytto.setText("0.0" + "\n" +"0.0");
         }
-        String alinLuku = haeAlinLuku(syote);
-        if (alinLuku !="") textAreaNaytto.appendText("\n" + alinLuku);
-        else  textAreaNaytto.appendText("\n" + textAreaNaytto.getText());   
     }
     
+    /**
+     * Tekee vähennyslaskun rpn-laskimen kahdelle alimmalle luvulle
+     */
     private void vahennaLuvut() {
-        StringBuilder syote = haeSyote(textAreaNaytto);
-        poistaRivinvaihdotLopusta(syote);        
-        double alinLuku = Double.parseDouble(haeAlinLuku(syote));
-        poistaAlinLuku(syote);
-        poistaRivinvaihdotLopusta(syote);
-        double toiseksiAlinLuku = Double.parseDouble(haeAlinLuku(syote));
-        double summa = toiseksiAlinLuku- alinLuku;
-        poistaViimeinen(textAreaNaytto);
-        if (textAreaNaytto.getLength() == 0) textAreaNaytto.appendText(Double.toString(summa));  
-        else textAreaNaytto.appendText("\n"+summa);
+        try {
+            StringBuilder syote = haeSyote(textAreaNaytto);
+            poistaRivinvaihdotLopusta(syote);        
+            double alinLuku = Double.parseDouble(haeAlinLuku(syote));
+            poistaAlinLuku(syote);
+            poistaRivinvaihdotLopusta(syote);
+            double toiseksiAlinLuku = Double.parseDouble(haeAlinLuku(syote));
+            double summa = toiseksiAlinLuku- alinLuku;
+            poistaViimeinen(textAreaNaytto);
+            if (textAreaNaytto.getLength() == 0) textAreaNaytto.appendText(Double.toString(summa));  
+            else textAreaNaytto.appendText("\n"+summa);
+        } catch (Exception e) {
+                textAreaNaytto.setText("0.0");
         
+        }
     }
-
 }
