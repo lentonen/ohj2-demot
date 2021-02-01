@@ -25,12 +25,12 @@ public class Esiintymat
      * @return jono josa ei esiinny poistettavaa jonoa
      * @example
      * <pre name="test">
-     * poistaEsiintymat("Catcat", "at") === "Cc";
-     * poistaEsiintymat("Paatti", "at") === "Pi";
-     * poistaEsiintymat("Puatit", "at") === "Puit";
-     * poistaEsiintymat("atiu", "at") === "iu";
-     * poistaEsiintymat("atatiu", "at") === "iu";
-     * poistaEsiintymat("kissaisis", "is") === "ksa";
+     * poistaEsiintymat("Catcat", "at").equals("Cc");
+     * poistaEsiintymat("Paatti", "at").equals("Pi");
+     * poistaEsiintymat("Puatit", "at").equals("Puit");
+     * poistaEsiintymat("atiu", "at").equals("iu");
+     * poistaEsiintymat("atatiu", "at").equals("iu");
+     * poistaEsiintymat("kissaisis", "is").equals("ksa");
      * </pre>
      */
     public static String poistaEsiintymat(String jono, String poistettava)

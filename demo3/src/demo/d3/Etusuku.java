@@ -22,17 +22,17 @@ public class Etusuku {
     * @example
     * <pre name="test">
     *   StringBuilder jono = new StringBuilder("123 456"); String s;
-    *   s = erota(jono,' ',false); jono.toString() === "456"; s === "123";
-    *   s = erota(jono,' ',false); jono.toString() === "";    s === "456";
+    *   s = erota(jono,' ',false); jono.toString().equals("456"); s.equals("123");
+    *   s = erota(jono,' ',false); jono.toString().equals("");    s.equals("456");
     *   jono = new StringBuilder("1 2 3");
-    *   erota(jono,' ',false) === "1";
-    *   erota(jono,' ',false) === "2";
-    *   erota(jono,' ',false) === "3";
-    *   erota(jono,' ',false) === "";
-    *   erota(jono,' ',false) === "";
+    *   erota(jono,' ',false).equals("1");
+    *   erota(jono,' ',false).equals("2");
+    *   erota(jono,' ',false).equals("3");
+    *   erota(jono,' ',false).equals("");
+    *   erota(jono,' ',false).equals("");
     *   jono = new StringBuilder("123 456 789");
-    *   erota(jono,' ',true) === "123 456"
-    *   erota(jono,' ',true) === "789"
+    *   erota(jono,' ',true).equals("123 456");
+    *   erota(jono,' ',true).equals("789");
     * </pre>
     */
    public static String erota(StringBuilder jono, char merkki, boolean etsitakaperin) {
@@ -99,11 +99,11 @@ public class Etusuku {
     * @return käännetty merkkijonos
     * @example
     * <pre name="test">
-    *   vaihdaAlkuLoppu("Aku Ankka", ' ', false) === "Ankka Aku";
-    *   vaihdaAlkuLoppu("Jukka Pekka Palo", ' ', true) === "Palo Jukka Pekka";
-    *   vaihdaAlkuLoppu("Aku", ' ', false) === "Aku";
-    *   vaihdaAlkuLoppu("", ' ', false) === "";
-    *   vaihdaAlkuLoppu("toimii.tama", '.', false) === "tama.toimii";
+    *   vaihdaAlkuLoppu("Aku Ankka", ' ', false).equals("Ankka Aku");
+    *   vaihdaAlkuLoppu("Jukka Pekka Palo", ' ', true).equals("Palo Jukka Pekka");
+    *   vaihdaAlkuLoppu("Aku", ' ', false).equals("Aku");
+    *   vaihdaAlkuLoppu("", ' ', false).equals("");
+    *   vaihdaAlkuLoppu("toimii.tama", '.', false).equals("tama.toimii");
     * </pre>
     */
    public static String vaihdaAlkuLoppu(String merkkijono, char erotin, boolean etsiTakaperin) {
@@ -122,11 +122,11 @@ public class Etusuku {
     * @return Sukunimi Etunimi
     * @example
     * <pre name="test">
-    *   vaihdaEtuSuku("") === ""
-    *   vaihdaEtuSuku(" ") === ""
-    *   vaihdaEtuSuku("Pele") === "Pele"
-    *   vaihdaEtuSuku("Aku Ankka") === "Ankka Aku"
-    *   vaihdaEtuSuku("Jukka Pekka Palo") === "Palo Jukka Pekka"
+    *   vaihdaEtuSuku("").equals("");
+    *   vaihdaEtuSuku(" ").equals("");
+    *   vaihdaEtuSuku("Pele").equals("Pele");
+    *   vaihdaEtuSuku("Aku Ankka").equals("Ankka Aku");
+    *   vaihdaEtuSuku("Jukka Pekka Palo").equals("Palo Jukka Pekka");
     * </pre>
     */
    public static String vaihdaEtuSuku(String nimi) {
@@ -141,10 +141,10 @@ public class Etusuku {
     * @return Etunimi Sukunimi
     * @example
     * <pre name="test">
-    *   vaihdaSukuEtu("") === ""
-    *   vaihdaSukuEtu("Pele") === "Pele"
-    *   vaihdaSukuEtu("Ankka Aku") === "Aku Ankka"
-    *   vaihdaSukuEtu("Palo Jukka Pekka") === "Jukka Pekka Palo"
+    *   vaihdaSukuEtu("").equals("");
+    *   vaihdaSukuEtu("Pele").equals("Pele");
+    *   vaihdaSukuEtu("Ankka Aku").equals("Aku Ankka");
+    *   vaihdaSukuEtu("Palo Jukka Pekka").equals("Jukka Pekka Palo");
     * </pre>
     */
    public static String vaihdaSukuEtu(String nimi) {
