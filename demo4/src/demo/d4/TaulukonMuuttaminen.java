@@ -17,6 +17,15 @@ public class TaulukonMuuttaminen {
         System.out.println("Aluksi : " + Arrays.toString(t));
         KasitteleTaulukko(t);
         System.out.println("Lopuksi: " + Arrays.toString(t));
+        
+        int a=4;
+        int b=2;
+        int c=0;
+        if ( c++ != 0 ) 
+            if ( a-- != 0);
+            else b-=3;
+        else c+=8;
+        c = a*b;
     }
     
     
