@@ -1,6 +1,6 @@
 package demo.d3;
 
-import fi.jyu.mit.ohj2.Mjonot;
+
 
 
 /**

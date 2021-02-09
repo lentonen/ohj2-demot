@@ -1,8 +1,16 @@
 package demo.d2;
 
+/**
+ * @author Henri
+ * @version Feb 5, 2021
+ *
+ */
 public class KertomaWhile
 {
 
+    /**
+     * @param args ei käytössä
+     */
     public static void main(String[] args)
     {
         System.out.printf("Luvun 5 kertoma on: %d\n", kertoma(6));

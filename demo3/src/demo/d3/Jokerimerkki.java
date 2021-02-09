@@ -21,9 +21,9 @@ public class Jokerimerkki
     }
 
     /**
-     * @param jono s
-     * @param maski s
-     * @return s
+     * @param jono s tutkittava jono
+     * @param maski s maski johon verrataan
+     * @return s true jos samat tai samat jokerimerkillä
      * @example
      * <pre name="test">
      * onkoSamatKysymysmerkilla("kissa", "kissa") === true;
