@@ -34,8 +34,8 @@ public class Henkilo {
     /**
      * @return henkilön syntymävuosi
      */
-    public String getSyntymavuosi() {
-        return Integer.toString(syntVuosi);
+    public int getSyntymavuosi() {
+        return syntVuosi;
     }
     
     
