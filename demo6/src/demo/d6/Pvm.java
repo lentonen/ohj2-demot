@@ -233,7 +233,7 @@ public class Pvm {
         if (this.k < pv2.getKuukausi()) return -1;
         if (this.k > pv2.getKuukausi()) return 1;
         
-        if (this.p < pv2.getPaiva()) return -1;
+        if (this.p < pv2.getPaiva()) return -1; 
         if (this.p > pv2.getPaiva()) return 1;
         
         return 0;
