@@ -1,6 +1,5 @@
 package demo.d6;
 
-//import demo.d3.Pvm;
 
 /**
  * Tutkitaan olioiden luomista
@@ -99,77 +98,70 @@ public class Pvm {
    }
    
    
+  /**
+   * Tarkistaa onko syötetty pvm laiton
+   * @param pp päivä
+   * @param kk kuukausi
+   * @param vv vuosi
+   * @return true jos päivä on laiton, false jos ei
+   */
+   public static boolean onkoLaitonPvm(int pp, int kk, int vv) {
+       // Taulukko karkausvuoden huomioimista varten
+       int[][] kkPituudet ={ 
+               // 1  2   3   4   5   6   7   8   9   10  11  12    0-rivi normaalivuosi, 1-rivi karkausvuosi
+               { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 },
+               { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 }};
+       
+       if (kk > 12 || pp > kkPituudet[karkausvuosi(vv)][kk-1]) return true;
+       return false;
+   }
+   
+   
    /**
- * @param pp uusi päivämäärä
- * @param kk uusi kuukausi
- * @param vv uusi vuosi
- * @example
- * <pre name="test">
- * Pvm pvm = new Pvm(15, 3, 2015);
- * pvm.toString() === "15.3.2015";
- * 
- * pvm.alusta(16, 4, 2016);
- * pvm.toString() === "16.4.2016";
- * 
- * pvm.alusta(17, 5, 20150);
- * pvm.toString() === "17.5.20150";
- * 
- * pvm.alusta(0, 0, 2003);
- * pvm.toString() === "17.5.2003";
- * 
- * pvm.alusta(29, 2, 2020);
- * pvm.toString() === "29.2.2020";
- * 
- * pvm.alusta(0, 0, 2021);
- * pvm.toString() === "29.2.2020";
- * 
- * pvm.alusta(28, 0, 2021);
- * pvm.toString() === "28.2.2021";
- * 
- * pvm.alusta(31,3,2021);
- * pvm.toString() === "31.3.2021";
- * 
- * pvm.alusta(0,4,2021);
- * pvm.toString() === "31.3.2021";
- * 
- * </pre>
- */
-public void alusta(int pp, int kk, int vv) {
-    // Jos pp tai kk on laiton, niin lopetetaan.   
-    if (pp > 31 || kk > 13 || kk < 0) return;  
+   * @param kk uusi kuukausi
+   * @param pp uusi päivämäärä
+   * @param vv uusi vuosi
+   * @example
+   * <pre name="test">
+   * Pvm pvm = new Pvm(20,2,2012);
+   *   pvm.alusta(1,3,0);     pvm.toString() === "1.3.2012";
+   *   pvm.alusta(2,13,2012); pvm.toString() === "1.3.2012";
+   *   pvm.alusta(28,2,2012); pvm.toString() === "28.2.2012";
+   *   pvm.alusta(29,2,2011); pvm.toString() === "28.2.2012";
+   *   pvm.alusta(29,2,2012); pvm.toString() === "29.2.2012";
+   *   pvm.alusta(31,3,2012); pvm.toString() === "31.3.2012";
+   *   pvm.alusta(31,4,2012); pvm.toString() === "31.3.2012";
+   *   pvm.alusta( 0,2,2012); pvm.toString() === "31.3.2012";
+   * 
+   * </pre>
+   */
+   public void alusta(int pp, int kk, int vv) {
+       // Jos pp tai kk on laiton, niin lopetetaan.   
+       if (pp > 31 || kk > 13 || kk < 0) return;  
     
-    // Taulukko karkausvuoden huomioimista varten
-    int[][] kkPituudet ={ 
-            // 1  2   3   4   5   6   7   8   9   10  11  12    0-rivi normaalivuosi, 1-rivi karkausvuosi
-            { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 },
-            { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 }};
+       //Tallennetaan alustamisessa ehdotettu pvm. apumuuttujiin
+       int apuP;
+       int apuK;
+       int apuV;
     
-    // pvm tai kuukausi ei muuteta, tarkistetaan, että uusi vv ei aiheuta laitonta tilannetta
-    if (pp == 0 && kk == 0) {
-        if (this.k > 12 || this.p > kkPituudet[karkausvuosi(vv)][this.k-1]) return;  
-        this.v=vv;
-        return;
+       if (pp == 0) apuP = this.p;
+       else apuP = pp;
+    
+       if (kk == 0) apuK = this.k;
+       else apuK = kk;
+    
+       if (vv == 0) apuV = this.v;
+       else apuV = vv;
+    
+       //Tarkistetaan onko laiton, jos on niin lopetetaan.
+       if (onkoLaitonPvm(apuP, apuK, apuV)) return;
+    
+       // Alustetaan uusi pvm.
+       this.p = apuP;
+       this.k = apuK;
+       this.v = apuV;
     }
-    
-    // pvm ei muutu, tarkistetaan että uusi kk ja vv eivät aiheuta laitonta tilannetta
-    if (pp == 0 && (kk > 12 || this.p > kkPituudet[karkausvuosi(vv)][kk-1])) return;
 
-    // kuukausi ei muutu, tarkistetaan että uusi vv ja pp eivät aiheuta laitonta tilannetta
-    if (kk == 0 ) {
-        if (this.k > 12 || pp > kkPituudet[karkausvuosi(vv)][this.k-1]) {           
-            return;
-        }
-    }
-    
-    // tarkistetaan että uudet arvot eivät aiheuta laitonta tilannetta.
-    else if (kk > 12 || pp > kkPituudet[karkausvuosi(vv)][kk-1]) return;
-    
-    // Tarkistusten jälkeen laitetaan uudet arvot paikalleen, jos ei ole syötetty 0. 
-    if (pp != 0) this.p=pp;
-    if (kk != 0) this.k=kk;
-    if (vv != 0) this.v=vv;
-    }
-    
 
     /**
      * @param pv1 ensimmäinen päivämäärä
@@ -177,23 +169,35 @@ public void alusta(int pp, int kk, int vv) {
      * @return -1 jos pv1 on ennen, 0 jos samoja, 1 jos pv1 on jälkeen
      * @example
      * <pre name="test">
-     * Pvm pv1 = new Pvm(15,3,2015);
-     * Pvm pv2 = new Pvm(15,3,2015);
-     * compareTo(pv1, pv2) === 0;
-     * 
-     * pv2.alusta(16,0,0);
-     * compareTo(pv1, pv2) === -1;
-     * 
-     * pv1.alusta(17,0,0);
-     * compareTo(pv1, pv2) === 1;
+     *  Pvm pv1 = new Pvm(15,6,2013);
+     *  Pvm pv2 = new Pvm(14,5,2014);
+     *  Pvm pv3 = new Pvm(15,7,2014);
+     *  Pvm pv4 = new Pvm(16,7,2014);
+     *  Pvm pv5 = new Pvm(16,7,2014);
+     *  Pvm pv6 = new Pvm(16,7,2012);
+     *  Pvm.compareTo(pv1,pv2) === -1;  // ero vuodessa
+     *  Pvm.compareTo(pv2,pv1) ===  1;
+     *  Pvm.compareTo(pv2,pv3) === -1;  // ero kuukaudessa
+     *  Pvm.compareTo(pv3,pv2) ===  1;
+     *  Pvm.compareTo(pv3,pv4) === -1;  // ero päivässä
+     *  Pvm.compareTo(pv4,pv3) ===  1;
+     *  Pvm.compareTo(pv4,pv5) ===  0;  // kaikki samoja
+     *  Pvm.compareTo(pv6,pv2) === -1;  // ero kuukaudessa, mutta vuodessa toisinpäin
+     *  Pvm.compareTo(pv2,pv6) ===  1;
      * 
      * </pre>
      */
     public static int compareTo (Pvm pv1, Pvm pv2) {
         if (pv1.getVuosi() < pv2.getVuosi()) return -1;
+        if (pv1.getVuosi() > pv2.getVuosi()) return 1;
+        
+        
         if (pv1.getKuukausi() < pv2.getKuukausi()) return -1;
+        if (pv1.getKuukausi() > pv2.getKuukausi()) return  1;
+        
         if (pv1.getPaiva() < pv2.getPaiva()) return -1;
         if (pv1.getPaiva() > pv2.getPaiva()) return 1;
+        
         return 0;
         
     }
@@ -205,22 +209,33 @@ public void alusta(int pp, int kk, int vv) {
      * @return -1 jos olio itse on ennen, 0 jos samoja, 1 jos olio itse on jälkeen
      * @example
      * <pre name="test">
-     * Pvm pv1 = new Pvm(15,3,2015);
-     * Pvm pv2 = new Pvm(15,3,2015);
-     * pv1.compareTo(pv2) === 0;
-     * 
-     * pv2.alusta(16,0,0);
-     * pv1.compareTo(pv2) === -1;
-     * 
-     * pv1.alusta(17,0,0);
-     * pv1.compareTo(pv2) === 1;
+     *  Pvm pv1 = new Pvm(15,6,2013);
+     *  Pvm pv2 = new Pvm(14,5,2014);
+     *  Pvm pv3 = new Pvm(15,7,2014);
+     *  Pvm pv4 = new Pvm(16,7,2014);
+     *  Pvm pv5 = new Pvm(16,7,2014);
+     *  Pvm pv6 = new Pvm(16,7,2012);
+     *  pv1.compareTo(pv2) === -1;  // ero vuodessa
+     *  pv2.compareTo(pv1) ===  1;
+     *  pv2.compareTo(pv3) === -1;  // ero kuukaudessa
+     *  pv3.compareTo(pv2) ===  1;
+     *  pv3.compareTo(pv4) === -1;  // ero päivässä
+     *  pv4.compareTo(pv3) ===  1;
+     *  pv4.compareTo(pv5) ===  0;  // kaikki samoja
+     *  pv6.compareTo(pv2) === -1;  // ero kuukaudessa, mutta vuodessa toisinpäin
+     *  pv2.compareTo(pv6) ===  1;
      * </pre>
      */
     public int compareTo(Pvm pv2) {
         if (this.v < pv2.getVuosi()) return -1;
+        if (this.v > pv2.getVuosi()) return 1;
+        
         if (this.k < pv2.getKuukausi()) return -1;
+        if (this.k > pv2.getKuukausi()) return 1;
+        
         if (this.p < pv2.getPaiva()) return -1;
         if (this.p > pv2.getPaiva()) return 1;
+        
         return 0;
     }
 

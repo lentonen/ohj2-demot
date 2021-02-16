@@ -1,4 +1,4 @@
-package demo.d6.perinta;
+package demo.d6.rajapinta;
 
 
 /**
@@ -11,7 +11,9 @@ package demo.d6.perinta;
  *   miuku.toString() === "Musti 2300.0";
  * </pre>
  */
-public class Koira extends Elain {
+public class Koira implements ElainRajapinta {
+    private String nimi;
+    private double paino;
 
     /**
      * Alustetaan koiran tiedot
@@ -19,9 +21,18 @@ public class Koira extends Elain {
      * @param paino koiran paino
      */
     public Koira(String nimi, double paino) {
-        super(nimi, paino);
+        this.nimi = nimi;
+        this.paino = paino;
     }
-
+    
+    
+    /**
+     * Muuttaa koiran merkkijonoksi
+     */
+    @Override
+    public String toString() {
+        return nimi + " " +paino;
+    }
 
     /**
      * Ääntelee kuin koira
@@ -36,7 +47,7 @@ public class Koira extends Elain {
      * @param args ei käytössä
      */
     public static void main(String[] args) {
-        Elain elukat[] = {
+        ElainRajapinta elukat[] = {
                 new Koira("Musti", 18005),
                 new Kissa("Mirri", 18000),
                 new Koira("Pluto", 1930),
