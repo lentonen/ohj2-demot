@@ -1,5 +1,7 @@
 package demo.d7;
 
+import java.nio.charset.Charset;
+
 /**
  * @author Henri
  * @version Feb 16, 2021
@@ -43,7 +45,7 @@ public static void main(String[] args)
    else System.out.println("ei ole\n");
    
    // onko " matti* " sama kuin "Matti Nykänen"?
-   String syote = " matti nykänen ";
+   String syote = "mati*";
    String nimi ="Matti Nykänen";
    if (onkoSamat(syote, nimi))  
        System.out.println("syöte " +"\""  +syote +"\"" +" on sama kuin " +"\""+ nimi +"\"" +"\n");
@@ -53,26 +55,105 @@ public static void main(String[] args)
    // jotka kuuluvat annettuun joukkoon, jossa joukko voi olla vaikka
    //  "a-jr-w"
    String jono4 = "Kissa istuu puussa";
-   String merkit = "b-jr-w";
+   String merkit = "a-jr-w";
    int merkkienLkm = merkkienMaara(jono4, merkit);
    System.out.println("Jonossa " +"\""  +jono4 +"\"" +" on merkkejä " +"\""+ merkit +"\"" + " " +merkkienLkm + " kappaletta");
    
+   String sana = "Saippuakauppias";
+   if (palindromi(sana)) System.out.println("Sana " +"\"" +sana +"\"" +" on palindromi, eli toisinpäin " +"\"" +sana +"\"" +"\n");
+   else System.out.println("Sana " +"\"" +sana +"\"" +" ei ole palindromi.\n");
    
+   // TEHTÄVÄ 6 _____________________________________________________________________________________________
+   
+   String s="Kissa istuu";
+   s = poistaLopusta(s,3); // => s = "Kissa is"          // Kuva 1
+   System.out.println(s);
+   // Tästä alkaa uusi koodi kuvaa 2 varten
+   StringBuilder sb = new StringBuilder("Kissa istuu");
+   poistaLopusta(sb,3);    // => sb= "Kissa is"          // Kuva2
+   System.out.println(sb);
    }
 
 
     /**
-     * laskee paljonko jonossa on annettuja merkkejä
+     * poistaa Stringbuilder-merkkijonon lopusta annetun määrän kirjaimia
+     * @param mj merkkijono josta poistetaan
+     * @param poistettavienLkm montako lopusta poistetaan
+     * @example
+     * <pre name="test">
+     * StringBuilder sb = new StringBuilder("Testataan toimiiko");
+     * poistaLopusta(sb,5);
+     * sb.toString() === "Testataan toi";
+     * poistaLopusta(sb,4);
+     * sb.toString() === "Testataan";
+     * poistaLopusta(sb,0);
+     * sb.toString() === "Testataan";
+     * poistaLopusta(sb,-1);
+     * sb.toString() === "Testataan";
+     * poistaLopusta(sb,10);
+     * sb.toString() === "";
+     * </pre>
+     */
+    public static void poistaLopusta(StringBuilder mj, int poistettavienLkm) {
+        if (poistettavienLkm < 0) return;
+        int pituus = mj.length(); 
+        if (poistettavienLkm > pituus)  mj.delete(0, pituus);   
+        else mj.delete(pituus-poistettavienLkm, pituus);  
+                    
+    }
+
+
+    /**
+     * poistaa String-merkkijonon lopusta annetun määrän kirjaimia
+     * @param mj merkkijono josta poistetaan
+     * @param poistettavienLkm montako lopusta poistetaan
+     * @return viite uuteen merkkijonoon, josta kirjaimet poistettu
+     * @example
+     * <pre name="test">
+     * String s="Testataan toimiiko";
+     *  s = poistaLopusta(s,5) === "Testataan toi";
+     *  s = poistaLopusta(s,4) === "Testataan";
+     *  s = poistaLopusta(s,0) === "Testataan";
+     *  s = poistaLopusta(s,-1) === "Testataan";
+     *  s = poistaLopusta(s,10) === "";
+     * </pre>
+     */
+    public static String poistaLopusta(String mj, int poistettavienLkm) {
+        if (poistettavienLkm < 0) return mj;
+        if (poistettavienLkm > mj.length()) return "";
+        StringBuilder jono = new StringBuilder(mj);
+        poistaLopusta(jono, poistettavienLkm);
+        return jono.toString();
+    }
+
+
+    /**
+     * laskee paljonko jonossa on annettuja merkkejä. Isot ja pienet kirjaimet käsitellään samalla tavalla.
      * @param jono jono jota tutkitaan
      * @param merkit merkit jota etsitään
      * @return merkkien lkm
-     * 
+     * @example
+     * <pre name="test">
+     *  String jono = "Kissa istuu puussa";
+     *  String merkit = "k";
+     *  merkkienMaara(jono, merkit) === 1;
+     *  merkit = "a";
+     *  merkkienMaara(jono, merkit) === 2;
+     *  merkit = "ak";
+     *  merkkienMaara(jono, merkit) === 3;
+     *  merkit = "b-j";
+     *  merkkienMaara(jono, merkit) === 2;
+     *  merkit = "a-jr-w";
+     *  merkkienMaara(jono, merkit) === 14;
+     *   merkit = "a-jpr-w";
+     *  merkkienMaara(jono, merkit) === 15;
+     * </pre>
      */
     public static int merkkienMaara(String jono, String merkit) {
         String ulkopuolistenRegExp = "(?i)[" + merkit +"]"; 
         String jononMerkit = jono.replaceAll(" ", "");
         return jononMerkit.length() - jononMerkit.replaceAll(ulkopuolistenRegExp, "").length(); 
-}
+    }
 
 
     /**
@@ -83,22 +164,33 @@ public static void main(String[] args)
      * @param syote ensimmäinen merkkijono
      * @param haettava toinen merkkijono
      * @return true jos ensimmäinen merkkijono löytyy toisesta merkkijonosta, false jos ei löydy
+     * @example
+     * <pre name="test">
+     * String syote = "matti";
+     * String nimi ="Matti Nykänen";
+     * onkoSamat(syote, nimi) === false;
+     * syote = "matti nykänen";
+     * onkoSamat(syote, nimi) === true;
+     * syote = "matti*";
+     * onkoSamat(syote, nimi) === true;
+     * syote = " mati* ";
+     * onkoSamat(syote, nimi) === false;
+     * syote = " atti* ";
+     * onkoSamat(syote, nimi) === false;
+     * </pre>
      */
     public static boolean onkoSamat(String syote, String haettava) {
         int viimeisenKirjaimenPaikka = syote.lastIndexOf('*')-1;
         if (syote.contains("*")) {
             // matti* löytää, mutta atti* ei löydä, nyk* ei löydä
-            return haettava.substring(0, viimeisenKirjaimenPaikka).equalsIgnoreCase(syote.trim().substring(0, viimeisenKirjaimenPaikka));
+            return haettava.substring(0, viimeisenKirjaimenPaikka+1).equalsIgnoreCase(syote.trim().substring(0, viimeisenKirjaimenPaikka+1));
             
             // VAIHTOEHTO 2: Poista käytöstä myös viimeisenKirjaimenPaikka, jos käytät tätä. 
             // matti* löytää, atti* löytää, nyk* löytää, mati* ei löydä
             // return haettava.toLowerCase().contains(syote.trim().toLowerCase().substring(0, syote.lastIndexOf('*')-1)) ;
-            
         }
         return haettava.equalsIgnoreCase(syote.trim());
-        
-    
-}
+    }
 
 
     /**
@@ -182,5 +274,33 @@ public static void main(String[] args)
     public static int viimeinen(String mj, char merkki) {
         return mj.lastIndexOf(merkki);  // Jos halutaan poistaa isojen ja pienten huomiointi, lisätään mj.toLowerCase,LastIndexOf...
     }
+    
+    
+    /**
+     * Tutkii onko sana palindromi. Ei välitetä isoista ja pienistä kirjaimista
+     * @param sana tutkittava sana
+     * @return true jos on, false jos ei ole
+     * @example
+     * <pre name="test">
+     * String sana = "abba";
+     * palindromi(sana) === true;
+     * sana = "apua";
+     * palindromi(sana) === false;
+     * sana = "saippuakauppias";
+     * palindromi(sana) === true;
+     * sana = "Saippuakauppias";
+     * palindromi(sana) === true;
+     * </pre>
+     */
+    public static boolean palindromi(String sana) {
+        int viimeinen = sana.length() -1;
+        String sanaLower = sana.toLowerCase();
+        int i = 0;
+        while ( i  < viimeinen-i) {
+            if (sanaLower.charAt(i) != sanaLower.charAt(viimeinen-i)) return false;
+            i++;
+        }
+        return true;
+   }
 
 }

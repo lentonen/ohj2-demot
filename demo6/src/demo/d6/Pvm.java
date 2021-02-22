@@ -242,7 +242,7 @@ public class Pvm {
     
     /**
      * Vertaa oliota itseään parametrina tuotuun päivämäärä-olioon
-     * @param pv2 päivämäärä johon olio itseään vertaa
+     * @param o päivämäärä johon olio itseään vertaa
      * @return true jos samoja, false jos erit
      * @example
      * <pre name="test">
@@ -257,12 +257,23 @@ public class Pvm {
      * pv1.equals(pv2) === false;
      * </pre>
      */
-    public boolean equals(Pvm pv2) {
+    @Override
+    public boolean equals(Object o) {
+        if (! (o instanceof Pvm))
+            return false;
+        Pvm pv2 = (Pvm) o;
         if (compareTo(pv2) == 0) return true;
         return false;
     }
     
     
+    @Override
+    public int hashCode() {
+        // TODO Auto-generated method stub
+        return super.hashCode();
+    }
+
+
     /**
      * Pääohjelma Pvm-olioiden testaukselle
      * @param args ei käytetä   
