@@ -17,7 +17,7 @@ public class Jokerimerkki
     {
         if ( onkoSamatKysymysmerkilla("Kissa","K?ss?") )
             System.out.println("On samat");
-        //TODO: kirjoita lisää testejä tähän
+        
     }
 
     /**

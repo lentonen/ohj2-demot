@@ -14,7 +14,7 @@ public class Ika {
      * @param args ei käytössä
      */
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
+        // 
 
     }
     

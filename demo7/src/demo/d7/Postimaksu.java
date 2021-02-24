@@ -110,7 +110,7 @@ public class Postimaksu {                         //ÄLÄ LAITA HINTOJA 5snt TAR
      */
     public static int suurinKirjeenPainoTaulukolla2(double rahat) {
         int maxHinta = maksut[0][maksut[0].length-1];
-        if (rahat >= maxHinta /100) return maksut[1][maksut[0].length-1]; // TODO: muuta riippumaan alkutaulukosta
+        if (rahat >= maxHinta /100) return maksut[1][maksut[0].length-1];
         int[] hintaTaulukko = new int[ maxHinta /tarkkuus];
         
         hintaTaulukko = muodostahintaTaulukko(hintaTaulukko);

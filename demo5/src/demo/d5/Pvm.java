@@ -14,7 +14,6 @@ public class Pvm {
 
     /**
      * Palauttaa tämänhetkisen päiväyksen.
-     * TODO: muutettava toimimaan oikein.
      */
     public void paivays() {
         pv = 30;
@@ -25,7 +24,6 @@ public class Pvm {
 
     /**
      * Alustetaan päivämäärä. 0-arvot eivät muuta vastaavaa attribuuttia
-     * TODO: oikeellisuustarkitukset
      * @param ipv päivän alustus
      * @param ikk kuukauden alustus
      * @param iivv vuoden alustus

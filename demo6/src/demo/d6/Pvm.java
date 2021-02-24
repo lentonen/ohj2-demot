@@ -1,5 +1,6 @@
 package demo.d6;
 
+import fi.jyu.mit.ohj2.Mjonot;
 
 /**
  * Tutkitaan olioiden luomista
@@ -42,6 +43,21 @@ public class Pvm {
     public Pvm(int p, int k) {
         this.p = p;
         this.k = k;
+    }
+    
+    
+    /** Alustetaan kaikki attribuutit oletusarvoon */
+    public Pvm() {
+        this(0, 0, 0);
+    }
+    
+    
+    /** 
+     * Alustetaan kuukausi ja vuosi oletusarvoon.  
+     * @param pv päivän alustusarvo, jos huono, käytetään nykypäivää
+     */
+    public Pvm(int pv) {
+        this(pv, 0, 0);
     }
     
     
@@ -269,7 +285,6 @@ public class Pvm {
     
     @Override
     public int hashCode() {
-        // TODO Auto-generated method stub
         return super.hashCode();
     }
 
@@ -303,6 +318,15 @@ public class Pvm {
         if ( pv1.compareTo(pv2) != 0 ) System.out.println(pv1 + " != " + pv2);
         pv1.alusta(3, 3, 0);
         if ( pv1.equals(pv2) ) System.out.println(pv1 + " == " + pv2);
+        
+        
+        StringBuilder mj = new StringBuilder("1,6,2015");
+        int pv = Mjonot.erota(mj, ',', 0);
+        int kk = Mjonot.erota(mj, ',', 0);
+        int vv = Mjonot.erota(mj, ',', 0);
+        System.out.println(pv);
+        System.out.println(kk);
+        System.out.println(vv);
 
     }
 }

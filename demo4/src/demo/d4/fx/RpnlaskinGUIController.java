@@ -246,7 +246,7 @@ public class RpnlaskinGUIController {
      */
     private void monistaLuku() {
         try{
-            StringBuilder syote = haeSyote(textAreaNaytto);  //TODO: regexp kuntoon, jotta enter ei lisää kirjaimia
+            StringBuilder syote = haeSyote(textAreaNaytto); 
             poistaRivinvaihdotLopusta(syote);
             if (syote.length() == 0 || syote.toString().matches(".*[a-z]")) {
                 textAreaNaytto.setText("");
