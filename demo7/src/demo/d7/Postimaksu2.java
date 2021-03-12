@@ -3,7 +3,7 @@ package demo.d7;
 
 public class Postimaksu2 {                         
     private final static double[][] maksut = new double[][]{{0, 1.00, 1.40, 2.00, 4.00, 6.00, 10.00 },  //hinnat euroina
-                                                            {0, 50 ,  100,  250,  500,  1000, 2000}};   // painot grammoina
+                                                            {0, 50  ,  100,  250,  500,  1000, 2000}};   // painot grammoina
                                      
 
     /**
@@ -69,7 +69,7 @@ public class Postimaksu2 {
     public static double suurinKirjeenPainoTaulukolla(double rahat) {
         int tasojenLkm =  maksut[0].length;
         for (int i=0; i < tasojenLkm-1; i++) {
-            if (rahat <maksut[0][i+1]) return maksut[1][i];
+            if (rahat < maksut[0][i+1]) return maksut[1][i];
         }
         return maksut[1][tasojenLkm-1];
     }

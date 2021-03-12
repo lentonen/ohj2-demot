@@ -27,7 +27,7 @@ public class Kotka implements ElainRajapinta {
     
     
     /**
-     * Muuttaa koiran merkkijonoksi
+     * Muuttaa kotkan merkkijonoksi
      */
     @Override
     public String toString() {

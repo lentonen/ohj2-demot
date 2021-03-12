@@ -313,6 +313,7 @@ class Tulokset {
  *tuomaripisteet sekä kokonaispisteet.
  */
 class Kierros {
+    private final static int TUOMAREITA = 5;
     private double pituus;
     private double[] tuomarit;
     private double pisteet;
@@ -322,7 +323,7 @@ class Kierros {
      * Muodostaja Kierros-oliolle.
      */
     public Kierros() {
-        this.tuomarit = new double[5];
+        this.tuomarit = new double[TUOMAREITA];
     }
     
 

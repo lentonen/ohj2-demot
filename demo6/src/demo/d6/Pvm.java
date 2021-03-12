@@ -156,18 +156,13 @@ public class Pvm {
        if (pp > 31 || kk > 13 || kk < 0) return;  
     
        //Tallennetaan alustamisessa ehdotettu pvm. apumuuttujiin
-       int apuP;
-       int apuK;
-       int apuV;
-    
+       int apuP = pp;
+       int apuK = kk;
+       int apuV = vv;
        if (pp == 0) apuP = this.p;
-       else apuP = pp;
-    
-       if (kk == 0) apuK = this.k;
-       else apuK = kk;
-    
+       if (kk == 0) apuK = this.k;  
        if (vv == 0) apuV = this.v;
-       else apuV = vv;
+
     
        //Tarkistetaan onko laiton, jos on niin lopetetaan.
        if (onkoLaitonPvm(apuP, apuK, apuV)) return;
