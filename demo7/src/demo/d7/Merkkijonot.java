@@ -1,6 +1,10 @@
 package demo.d7;
 
 import java.nio.charset.Charset;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * @author Henri
@@ -72,6 +76,17 @@ public static void main(String[] args)
    StringBuilder sb = new StringBuilder("Kissa istuu");
    poistaLopusta(sb,3);    // => sb= "Kissa is"          // Kuva2
    System.out.println(sb);
+   
+   System.out.println(String.format("%5d", 1));
+   System.out.println(String.format("%5d", 485));
+   if (String.format("%5d", 1).compareTo(String.format("%5d", 485)) < 0) System.out.println("isompia");
+   String testi = String.format("%.1f", 50.0);
+   System.out.println(testi);
+   
+   Date date = Calendar.getInstance().getTime();
+   DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+   String today = formatter.format(date);
+   System.out.println("Today : " + today);
    }
 
 

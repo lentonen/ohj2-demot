@@ -1,0 +1,17 @@
+[SISÄLLYS] - aina etsitään sisällystä tällä aihe- (topic) nimellä.
+ Ohjelma osaa tällä hetkellä
+
+ ynnää - kokonaisluvut
+ isoksi - jono
+ palindromiko - jono
+
+[YNNÄÄ]
+
+Ynnää:     Osaa ynnätä kokonaislukuja yhteen. Luvut erotetaan välilyönnillä.
+===== 
+[ISOKSI]
+
+Muuttaa merkkijonon pienet kirjaimet isoiksi.
+[PALINDROMIKO]
+
+Kertoo onko sana palindromi.

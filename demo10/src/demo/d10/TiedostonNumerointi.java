@@ -10,7 +10,6 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 
-import fi.jyu.mit.ohj2.Mjonot;
 
 /**
  * @author Henri
